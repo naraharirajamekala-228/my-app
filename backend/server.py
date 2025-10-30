@@ -452,7 +452,7 @@ async def seed_initial_data():
             "car_model": "Tata Safari",
             "brand": "Tata",
             "city": "Hyderabad",
-            "image_url": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&h=600&fit=crop",
+            "image_url": "https://imgd.aeplcdn.com/664x374/n/cw/ec/139139/safari-exterior-right-front-three-quarter.jpeg?isig=0&q=80",
             "max_members": 30,
             "current_members": 22
         },
@@ -460,7 +460,7 @@ async def seed_initial_data():
             "car_model": "Mahindra Scorpio N",
             "brand": "Mahindra",
             "city": "Mumbai",
-            "image_url": "https://images.unsplash.com/photo-1581540222194-0def2dda95b8?w=800&h=600&fit=crop",
+            "image_url": "https://imgd.aeplcdn.com/664x374/n/cw/ec/130591/scorpio-n-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80",
             "max_members": 50,
             "current_members": 45
         },
@@ -468,7 +468,7 @@ async def seed_initial_data():
             "car_model": "Kia Seltos",
             "brand": "Kia",
             "city": "Bangalore",
-            "image_url": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&h=600&fit=crop",
+            "image_url": "https://imgd.aeplcdn.com/664x374/n/cw/ec/130591/seltos-exterior-right-front-three-quarter-109.jpeg?isig=0&q=80",
             "max_members": 30,
             "current_members": 18
         },
@@ -476,7 +476,7 @@ async def seed_initial_data():
             "car_model": "Tata Nexon",
             "brand": "Tata",
             "city": "Delhi",
-            "image_url": "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&h=600&fit=crop",
+            "image_url": "https://imgd.aeplcdn.com/664x374/n/cw/ec/141867/nexon-exterior-right-front-three-quarter-71.jpeg?isig=0&q=80",
             "max_members": 30,
             "current_members": 12
         },
@@ -484,7 +484,7 @@ async def seed_initial_data():
             "car_model": "Mahindra XUV700",
             "brand": "Mahindra",
             "city": "Pune",
-            "image_url": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&h=600&fit=crop",
+            "image_url": "https://imgd.aeplcdn.com/664x374/n/cw/ec/40087/xuv-700-exterior-right-front-three-quarter-11.jpeg?isig=0&q=80",
             "max_members": 50,
             "current_members": 30
         }
