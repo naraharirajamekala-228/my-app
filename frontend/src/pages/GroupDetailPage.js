@@ -20,10 +20,11 @@ const GroupDetailPage = ({ user, setUser }) => {
   const [processing, setProcessing] = useState(false);
   const [userVote, setUserVote] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [hasPaid, setHasPaid] = useState(false);
 
   useEffect(() => {
     fetchGroupData();
-  }, [groupId]);
+  }, [groupId, user]);
 
   const fetchGroupData = async () => {
     try {
@@ -36,6 +37,16 @@ const GroupDetailPage = ({ user, setUser }) => {
       setGroup(groupRes.data);
       setMembers(membersRes.data);
       setOffers(offersRes.data);
+
+      // Check if user has paid for this group
+      if (user) {
+        try {
+          const paymentRes = await axios.get(`${API}/users/check-payment/${groupId}`);
+          setHasPaid(paymentRes.data.has_paid);
+        } catch (error) {
+          setHasPaid(false);
+        }
+      }
 
       // Check if user has voted
       if (user) {
