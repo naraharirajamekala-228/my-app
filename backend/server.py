@@ -269,9 +269,6 @@ async def get_group(group_id: str):
 
 @api_router.post("/groups", response_model=Group)
 async def create_group(group_data: GroupCreate, current_user: User = Depends(get_current_user)):
-    if not current_user.is_premium:
-        raise HTTPException(status_code=403, detail="Premium membership required to create groups")
-    
     group = Group(**group_data.model_dump())
     await db.groups.insert_one(group.model_dump())
     
@@ -279,8 +276,13 @@ async def create_group(group_data: GroupCreate, current_user: User = Depends(get
 
 @api_router.post("/groups/{group_id}/join")
 async def join_group(group_id: str, current_user: User = Depends(get_current_user)):
-    if not current_user.is_premium:
-        raise HTTPException(status_code=403, detail="Premium membership required to join groups")
+    # Check if user has paid for this group
+    payment = await db.payments.find_one(
+        {"user_id": current_user.id, "group_id": group_id},
+        {"_id": 0}
+    )
+    if not payment:
+        raise HTTPException(status_code=403, detail="Payment required to join this group")
     
     # Check if group exists
     group = await db.groups.find_one({"id": group_id}, {"_id": 0})
