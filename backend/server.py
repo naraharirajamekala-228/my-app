@@ -107,6 +107,14 @@ class Vote(BaseModel):
     group_id: str
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
+class Payment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    group_id: str
+    amount: float = 1000.0
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
 # ============= HELPER FUNCTIONS =============
 
 def hash_password(password: str) -> str:
