@@ -110,16 +110,6 @@ const HomePage = ({ user, setUser }) => {
             <div className="flex items-center space-x-3">
               {user ? (
                 <>
-                  {!user.is_premium && (
-                    <div className="text-xs bg-orange-50 text-orange-700 px-3 py-1.5 rounded-full border border-orange-200">
-                      Free Member
-                    </div>
-                  )}
-                  {user.is_premium && (
-                    <div className="text-xs bg-green-50 text-green-700 px-3 py-1.5 rounded-full border border-green-200">
-                      Premium Member
-                    </div>
-                  )}
                   {user.is_admin && (
                     <Button 
                       onClick={() => navigate('/admin')} 
