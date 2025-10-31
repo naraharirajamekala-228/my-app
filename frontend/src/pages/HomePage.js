@@ -182,8 +182,8 @@ const HomePage = ({ user, setUser }) => {
       {/* Groups Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
-          <h3 className="text-2xl font-bold text-gray-900">Active Groups</h3>
-          <p className="text-gray-600 mt-1">{filteredGroups.length} groups available</p>
+          <h3 className="text-2xl font-bold text-gray-900">Active Brand Groups</h3>
+          <p className="text-gray-600 mt-1">{filteredGroups.length} brand groups available</p>
         </div>
 
         {filteredGroups.length === 0 ? (
