@@ -446,47 +446,55 @@ async def seed_initial_data():
     if existing_groups > 0:
         return {"message": "Data already seeded"}
     
-    # Create sample groups
+    # Create sample groups - Brand-based groups
     sample_groups = [
         {
-            "car_model": "Tata Safari",
+            "car_model": "Tata Cars",
             "brand": "Tata",
-            "city": "Hyderabad",
-            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Tata/Safari/10745/1697698611076/front-left-side-47.jpg",
-            "max_members": 30,
-            "current_members": 22
+            "city": "Pan India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Tata/Nexon/10904/1697697560971/front-left-side-47.jpg",
+            "max_members": 50,
+            "current_members": 35
         },
         {
-            "car_model": "Mahindra Scorpio N",
+            "car_model": "Mahindra Cars",
             "brand": "Mahindra",
-            "city": "Mumbai",
+            "city": "Pan India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Mahindra/Scorpio-N/10745/1690271963623/front-left-side-47.jpg",
             "max_members": 50,
-            "current_members": 45
+            "current_members": 42
         },
         {
-            "car_model": "Kia Seltos",
+            "car_model": "Kia Cars",
             "brand": "Kia",
-            "city": "Bangalore",
+            "city": "Pan India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Kia/Seltos/10902/1689588141785/front-left-side-47.jpg",
-            "max_members": 30,
-            "current_members": 18
-        },
-        {
-            "car_model": "Tata Nexon",
-            "brand": "Tata",
-            "city": "Delhi",
-            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Tata/Nexon/10904/1697697560971/front-left-side-47.jpg",
-            "max_members": 30,
-            "current_members": 12
-        },
-        {
-            "car_model": "Mahindra XUV700",
-            "brand": "Mahindra",
-            "city": "Pune",
-            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Mahindra/XUV700/10654/1697697619554/front-left-side-47.jpg",
             "max_members": 50,
-            "current_members": 30
+            "current_members": 28
+        },
+        {
+            "car_model": "Honda Cars",
+            "brand": "Honda",
+            "city": "Pan India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Honda/City/10583/1689322412833/front-left-side-47.jpg",
+            "max_members": 50,
+            "current_members": 31
+        },
+        {
+            "car_model": "Maruti Suzuki Cars",
+            "brand": "Maruti",
+            "city": "Pan India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Brezza/10584/1689245686360/front-left-side-47.jpg",
+            "max_members": 50,
+            "current_members": 38
+        },
+        {
+            "car_model": "Hyundai Cars",
+            "brand": "Hyundai",
+            "city": "Pan India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Hyundai/Creta/10745/1697698244846/front-left-side-47.jpg",
+            "max_members": 50,
+            "current_members": 33
         }
     ]
     
