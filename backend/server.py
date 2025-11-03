@@ -446,55 +446,71 @@ async def seed_initial_data():
     if existing_groups > 0:
         return {"message": "Data already seeded"}
     
-    # Create sample groups - Brand-based groups
+    # Create sample groups - ONE group per car brand
     sample_groups = [
         {
-            "car_model": "Tata Cars",
+            "car_model": "Tata Motors",
             "brand": "Tata",
-            "city": "Pan India",
+            "city": "All India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Tata/Nexon/10904/1697697560971/front-left-side-47.jpg",
-            "max_members": 50,
-            "current_members": 35
+            "max_members": 100,
+            "current_members": 67
         },
         {
-            "car_model": "Mahindra Cars",
+            "car_model": "Mahindra & Mahindra",
             "brand": "Mahindra",
-            "city": "Pan India",
+            "city": "All India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Mahindra/Scorpio-N/10745/1690271963623/front-left-side-47.jpg",
-            "max_members": 50,
-            "current_members": 42
+            "max_members": 100,
+            "current_members": 78
         },
         {
-            "car_model": "Kia Cars",
+            "car_model": "Kia Motors",
             "brand": "Kia",
-            "city": "Pan India",
+            "city": "All India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Kia/Seltos/10902/1689588141785/front-left-side-47.jpg",
-            "max_members": 50,
-            "current_members": 28
+            "max_members": 100,
+            "current_members": 54
+        },
+        {
+            "car_model": "Hyundai Motors",
+            "brand": "Hyundai",
+            "city": "All India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Hyundai/Creta/10745/1697698244846/front-left-side-47.jpg",
+            "max_members": 100,
+            "current_members": 71
         },
         {
             "car_model": "Honda Cars",
             "brand": "Honda",
-            "city": "Pan India",
+            "city": "All India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Honda/City/10583/1689322412833/front-left-side-47.jpg",
-            "max_members": 50,
-            "current_members": 31
+            "max_members": 100,
+            "current_members": 62
         },
         {
-            "car_model": "Maruti Suzuki Cars",
+            "car_model": "Maruti Suzuki",
             "brand": "Maruti",
-            "city": "Pan India",
+            "city": "All India",
             "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Maruti/Brezza/10584/1689245686360/front-left-side-47.jpg",
-            "max_members": 50,
-            "current_members": 38
+            "max_members": 100,
+            "current_members": 85
         },
         {
-            "car_model": "Hyundai Cars",
-            "brand": "Hyundai",
-            "city": "Pan India",
-            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Hyundai/Creta/10745/1697698244846/front-left-side-47.jpg",
-            "max_members": 50,
-            "current_members": 33
+            "car_model": "Volkswagen",
+            "brand": "Volkswagen",
+            "city": "All India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Volkswagen/Virtus/10647/1689586075609/front-left-side-47.jpg",
+            "max_members": 100,
+            "current_members": 41
+        },
+        {
+            "car_model": "Toyota",
+            "brand": "Toyota",
+            "city": "All India",
+            "image_url": "https://stimg.cardekho.com/images/carexteriorimages/930x620/Toyota/Fortuner/9611/1689588122826/front-left-side-47.jpg",
+            "max_members": 100,
+            "current_members": 73
         }
     ]
     
