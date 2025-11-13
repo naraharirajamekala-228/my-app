@@ -115,6 +115,20 @@ class Payment(BaseModel):
     amount: float = 2000.0
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
+class CarPreference(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    group_id: str
+    user_name: str
+    car_model: str
+    variant: str
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class CarPreferenceCreate(BaseModel):
+    car_model: str
+    variant: str
+
 # ============= HELPER FUNCTIONS =============
 
 def hash_password(password: str) -> str:
