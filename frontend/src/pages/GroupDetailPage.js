@@ -368,9 +368,14 @@ const GroupDetailPage = ({ user, setUser }) => {
                         <p className="text-sm font-medium text-gray-900 truncate">{member.user_name}</p>
                         <p className="text-xs text-gray-500 truncate">{member.user_email}</p>
                         {memberPref && (
-                          <div className="mt-1 text-xs text-[#0B5FFF] font-medium">
-                            <Car className="w-3 h-3 inline mr-1" />
-                            {memberPref.car_model} - {memberPref.variant}
+                          <div className="mt-1 text-xs">
+                            <div className="text-[#0B5FFF] font-medium">
+                              <Car className="w-3 h-3 inline mr-1" />
+                              {memberPref.car_model} - {memberPref.variant}
+                            </div>
+                            <div className="text-gray-500">
+                              ₹{(memberPref.on_road_price / 100000).toFixed(2)} Lakh
+                            </div>
                           </div>
                         )}
                       </div>
