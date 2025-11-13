@@ -147,6 +147,28 @@ const GroupDetailPage = ({ user, setUser }) => {
     }
   };
 
+  const handleSaveCarPreference = async () => {
+    if (!selectedModel || !selectedVariant) {
+      toast.error('Please select both car model and variant');
+      return;
+    }
+
+    try {
+      setProcessing(true);
+      await axios.post(`${API}/groups/${groupId}/preferences`, {
+        car_model: selectedModel,
+        variant: selectedVariant
+      });
+      toast.success('Car preference saved successfully!');
+      setShowCarSelectionModal(false);
+      fetchGroupData();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Failed to save preference');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC]">
