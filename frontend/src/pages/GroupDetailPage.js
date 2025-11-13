@@ -527,7 +527,7 @@ const GroupDetailPage = ({ user, setUser }) => {
                   data-testid="pay-now-btn"
                 >
                   {processing ? 'Processing...' : `Pay ₹${(() => {
-                    const price = carData[selectedModel][selectedVariant];
+                    const price = carData[selectedModel][selectedVariant][selectedTransmission];
                     if (price <= 1000000) return '1,000';
                     if (price <= 2000000) return '2,000';
                     if (price <= 3000000) return '3,000';
