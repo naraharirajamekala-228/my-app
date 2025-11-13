@@ -168,23 +168,15 @@ const GroupDetailPage = ({ user, setUser }) => {
           <div className="lg:col-span-2 space-y-6">
             {/* Group Hero */}
             <div className="bg-white rounded-2xl overflow-hidden border border-gray-200">
-              <div className="relative h-80">
+              <div className="relative brand-logo-hero">
                 <img
                   src={group.image_url}
                   alt={group.car_model}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <h1 className="text-4xl font-bold text-white">{group.car_model}</h1>
-                    <div className={`status-badge status-${group.status}`}>
-                      {group.status}
-                    </div>
-                  </div>
-                  <div className="flex items-center text-white/90">
-                    <MapPin className="w-5 h-5 mr-2" />
-                    <span className="text-lg">{group.city}</span>
+                <div className="absolute top-6 right-6">
+                  <div className={`status-badge status-${group.status}`}>
+                    {group.status}
                   </div>
                 </div>
               </div>
