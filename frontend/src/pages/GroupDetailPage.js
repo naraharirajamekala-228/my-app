@@ -99,19 +99,20 @@ const GroupDetailPage = ({ user, setUser }) => {
   };
 
   const handlePayment = async () => {
-    if (!selectedModel || !selectedVariant) {
-      toast.error('Please select car model and variant first');
+    if (!selectedModel || !selectedVariant || !selectedTransmission) {
+      toast.error('Please select car model, variant and transmission');
       return;
     }
 
     setProcessing(true);
     try {
-      const onRoadPrice = carData[selectedModel][selectedVariant];
+      const onRoadPrice = carData[selectedModel][selectedVariant][selectedTransmission];
       
       // Pay for this specific group with car details
       await axios.post(`${API}/users/pay-for-group/${groupId}`, {
         car_model: selectedModel,
         variant: selectedVariant,
+        transmission: selectedTransmission,
         on_road_price: onRoadPrice
       });
       
