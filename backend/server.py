@@ -351,6 +351,17 @@ async def join_group(group_id: str, current_user: User = Depends(get_current_use
     )
     await db.group_members.insert_one(member.model_dump())
     
+    # Save car preference from payment
+    car_preference = CarPreference(
+        user_id=current_user.id,
+        group_id=group_id,
+        user_name=current_user.name,
+        car_model=payment["car_model"],
+        variant=payment["variant"],
+        on_road_price=payment["on_road_price"]
+    )
+    await db.car_preferences.insert_one(car_preference.model_dump())
+    
     # Update group member count
     new_count = group_obj.current_members + 1
     update_data = {"current_members": new_count}
