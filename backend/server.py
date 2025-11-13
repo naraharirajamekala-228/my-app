@@ -346,6 +346,131 @@ async def get_group_members(group_id: str):
     members = await db.group_members.find({"group_id": group_id}, {"_id": 0}).to_list(1000)
     return [GroupMember(**m) for m in members]
 
+# ============= CAR PREFERENCE ROUTES =============
+
+@api_router.post("/groups/{group_id}/preferences")
+async def save_car_preference(
+    group_id: str, 
+    preference_data: CarPreferenceCreate, 
+    current_user: User = Depends(get_current_user)
+):
+    # Check if user is a member of the group
+    is_member = await db.group_members.find_one(
+        {"group_id": group_id, "user_id": current_user.id},
+        {"_id": 0}
+    )
+    if not is_member:
+        raise HTTPException(status_code=403, detail="Must be a group member to save preferences")
+    
+    # Check if preference already exists
+    existing_pref = await db.car_preferences.find_one(
+        {"group_id": group_id, "user_id": current_user.id},
+        {"_id": 0}
+    )
+    
+    if existing_pref:
+        # Update existing preference
+        await db.car_preferences.update_one(
+            {"id": existing_pref["id"]},
+            {"$set": {
+                "car_model": preference_data.car_model,
+                "variant": preference_data.variant
+            }}
+        )
+        return {"message": "Car preference updated successfully"}
+    else:
+        # Create new preference
+        preference = CarPreference(
+            user_id=current_user.id,
+            group_id=group_id,
+            user_name=current_user.name,
+            car_model=preference_data.car_model,
+            variant=preference_data.variant
+        )
+        await db.car_preferences.insert_one(preference.model_dump())
+        return {"message": "Car preference saved successfully", "preference": preference}
+
+@api_router.get("/groups/{group_id}/preferences", response_model=List[CarPreference])
+async def get_group_preferences(group_id: str):
+    preferences = await db.car_preferences.find({"group_id": group_id}, {"_id": 0}).to_list(1000)
+    return [CarPreference(**p) for p in preferences]
+
+@api_router.get("/groups/{group_id}/my-preference")
+async def get_my_preference(group_id: str, current_user: User = Depends(get_current_user)):
+    preference = await db.car_preferences.find_one(
+        {"group_id": group_id, "user_id": current_user.id},
+        {"_id": 0}
+    )
+    if preference:
+        return CarPreference(**preference)
+    return None
+
+# Car models and variants data
+CAR_DATA = {
+    "Tata": {
+        "Nexon": ["Smart", "Smart+", "Pure", "Pure+", "Creative", "Creative+", "Fearless", "Fearless+", "Accomplished", "Accomplished+"],
+        "Safari": ["Smart", "Pure", "Adventure", "Adventure+", "Accomplished", "Accomplished+"],
+        "Harrier": ["Smart", "Pure", "Adventure", "Adventure+", "Fearless", "Fearless+"],
+        "Punch": ["Pure", "Adventure", "Accomplished", "Creative+"],
+        "Altroz": ["XE", "XM", "XM+", "XT", "XZ", "XZ+"],
+        "Tiago": ["XE", "XM", "XT", "XZ", "XZ+"]
+    },
+    "Mahindra": {
+        "Scorpio N": ["Z2", "Z4", "Z6", "Z8", "Z8 L"],
+        "XUV700": ["MX", "AX3", "AX5", "AX7", "AX7 L"],
+        "Thar": ["AX Opt", "LX", "LX Hard Top"],
+        "Bolero": ["B4", "B6", "B6 Opt"],
+        "XUV 3XO": ["MX1", "MX2", "MX3", "AX5", "AX7", "AX7 L"],
+        "Scorpio Classic": ["S", "S3", "S5", "S7", "S9", "S11"]
+    },
+    "Kia": {
+        "Seltos": ["HTE", "HTK", "HTK+", "HTX", "HTX+", "GTX", "GTX+", "X-Line"],
+        "Sonet": ["HTE", "HTK", "HTK+", "HTX", "HTX+", "GTX+"],
+        "Carens": ["Premium", "Prestige", "Prestige Plus", "Luxury", "Luxury Plus"],
+        "EV6": ["GT Line"]
+    },
+    "Hyundai": {
+        "Creta": ["E", "EX", "S", "S+", "SX", "SX Tech", "SX Opt"],
+        "Venue": ["E", "S", "S+", "SX", "SX+", "SX Opt"],
+        "Verna": ["E", "S", "SX", "SX Opt"],
+        "Exter": ["EX", "S", "SX", "SX Opt"],
+        "Tucson": ["Platinum", "Signature"]
+    },
+    "Honda": {
+        "City": ["V", "VX", "ZX"],
+        "Elevate": ["V", "VX", "ZX"],
+        "Amaze": ["E", "S", "VX"],
+        "City Hybrid": ["V", "VX", "ZX"]
+    },
+    "Maruti": {
+        "Brezza": ["LXI", "VXI", "ZXI", "ZXI+"],
+        "Fronx": ["Sigma", "Delta", "Delta+", "Zeta", "Alpha"],
+        "Grand Vitara": ["Sigma", "Delta", "Zeta", "Alpha"],
+        "Ertiga": ["LXI", "VXI", "ZXI", "ZXI+"],
+        "Swift": ["LXI", "VXI", "ZXI", "ZXI+"],
+        "Baleno": ["Sigma", "Delta", "Zeta", "Alpha"],
+        "Dzire": ["LXI", "VXI", "ZXI", "ZXI+"]
+    },
+    "Volkswagen": {
+        "Virtus": ["Comfortline", "Highline", "Topline"],
+        "Taigun": ["Comfortline", "Highline", "Topline"],
+        "Tiguan": ["Elegance", "R-Line"]
+    },
+    "Toyota": {
+        "Fortuner": ["4x2 MT", "4x2 AT", "4x4 MT", "4x4 AT", "Legender 4x2", "Legender 4x4"],
+        "Innova Crysta": ["GX", "VX", "ZX"],
+        "Innova Hycross": ["GX", "GX (O)", "VX", "VX (O)", "ZX", "ZX (O)"],
+        "Urban Cruiser Hyryder": ["E", "S", "G", "V"],
+        "Glanza": ["E", "S", "G"]
+    }
+}
+
+@api_router.get("/car-data/{brand}")
+async def get_car_data(brand: str):
+    if brand in CAR_DATA:
+        return CAR_DATA[brand]
+    return {}
+
 # ============= ADMIN ROUTES =============
 
 @api_router.get("/admin/locked-groups", response_model=List[Group])
