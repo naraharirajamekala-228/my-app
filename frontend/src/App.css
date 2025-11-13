@@ -107,7 +107,37 @@ select {
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* Status badges */
+/* Brand logo styling */
+.brand-logo-card {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  min-height: 192px;
+}
+
+.brand-logo-card img {
+  max-width: 80%;
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.brand-logo-hero {
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  min-height: 320px;
+}
+
+.brand-logo-hero img {
+  max-width: 60%;
+  max-height: 200px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
 .status-badge {
   padding: 4px 12px;
   border-radius: 12px;
