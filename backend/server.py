@@ -234,6 +234,7 @@ async def get_me(current_user: User = Depends(get_current_user)):
 class PaymentCreate(BaseModel):
     car_model: str
     variant: str
+    transmission: str
     on_road_price: float
 
 @api_router.post("/users/pay-for-group/{group_id}")
@@ -269,6 +270,7 @@ async def pay_for_group(group_id: str, payment_data: PaymentCreate, current_user
         amount=amount,
         car_model=payment_data.car_model,
         variant=payment_data.variant,
+        transmission=payment_data.transmission,
         on_road_price=on_road_price
     )
     await db.payments.insert_one(payment.model_dump())
