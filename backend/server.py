@@ -228,8 +228,13 @@ async def get_me(current_user: User = Depends(get_current_user)):
 
 # ============= USER ROUTES =============
 
+class PaymentCreate(BaseModel):
+    car_model: str
+    variant: str
+    on_road_price: float
+
 @api_router.post("/users/pay-for-group/{group_id}")
-async def pay_for_group(group_id: str, current_user: User = Depends(get_current_user)):
+async def pay_for_group(group_id: str, payment_data: PaymentCreate, current_user: User = Depends(get_current_user)):
     # Check if group exists
     group = await db.groups.find_one({"id": group_id}, {"_id": 0})
     if not group:
@@ -243,14 +248,29 @@ async def pay_for_group(group_id: str, current_user: User = Depends(get_current_
     if existing_payment:
         raise HTTPException(status_code=400, detail="Already paid for this group")
     
+    # Calculate payment amount based on on-road price
+    on_road_price = payment_data.on_road_price
+    if on_road_price <= 1000000:  # 0-10 lakhs
+        amount = 1000.0
+    elif on_road_price <= 2000000:  # 10-20 lakhs
+        amount = 2000.0
+    elif on_road_price <= 3000000:  # 20-30 lakhs
+        amount = 3000.0
+    else:  # 30+ lakhs
+        amount = 5000.0
+    
     # Mock payment - create payment record
     payment = Payment(
         user_id=current_user.id,
-        group_id=group_id
+        group_id=group_id,
+        amount=amount,
+        car_model=payment_data.car_model,
+        variant=payment_data.variant,
+        on_road_price=on_road_price
     )
     await db.payments.insert_one(payment.model_dump())
     
-    return {"message": "Payment successful", "payment_id": payment.id}
+    return {"message": "Payment successful", "payment_id": payment.id, "amount": amount}
 
 @api_router.get("/users/check-payment/{group_id}")
 async def check_group_payment(group_id: str, current_user: User = Depends(get_current_user)):
