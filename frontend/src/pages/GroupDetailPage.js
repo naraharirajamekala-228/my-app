@@ -487,14 +487,14 @@ const GroupDetailPage = ({ user, setUser }) => {
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm text-gray-600">On-Road Price:</span>
                       <span className="text-lg font-bold text-gray-900">
-                        ₹{(carData[selectedModel][selectedVariant] / 100000).toFixed(2)} Lakh
+                        ₹{(carData[selectedModel][selectedVariant][selectedTransmission] / 100000).toFixed(2)} Lakh
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">Joining Amount:</span>
                       <span className="text-xl font-bold text-[#0B5FFF]">
                         ₹{(() => {
-                          const price = carData[selectedModel][selectedVariant];
+                          const price = carData[selectedModel][selectedVariant][selectedTransmission];
                           if (price <= 1000000) return '1,000';
                           if (price <= 2000000) return '2,000';
                           if (price <= 3000000) return '3,000';
