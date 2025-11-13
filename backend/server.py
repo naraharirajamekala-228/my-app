@@ -452,7 +452,7 @@ async def seed_initial_data():
             "car_model": "Tata Motors",
             "brand": "Tata",
             "city": "All India",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Tata_logo.svg/2560px-Tata_logo.svg.png",
+            "image_url": "https://customer-assets.emergentagent.com/job_a5689270-22d8-4a27-847f-79733a2db487/artifacts/jig16627_tata.png",
             "max_members": 50,
             "current_members": 32
         },
@@ -460,7 +460,7 @@ async def seed_initial_data():
             "car_model": "Mahindra & Mahindra",
             "brand": "Mahindra",
             "city": "All India",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Mahindra_%26_Mahindra_Logo.svg/2560px-Mahindra_%26_Mahindra_Logo.svg.png",
+            "image_url": "https://customer-assets.emergentagent.com/job_a5689270-22d8-4a27-847f-79733a2db487/artifacts/y5bo7393_mahindra.png",
             "max_members": 50,
             "current_members": 41
         },
@@ -468,7 +468,7 @@ async def seed_initial_data():
             "car_model": "Kia Motors",
             "brand": "Kia",
             "city": "All India",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Kia_logo2.svg/2560px-Kia_logo2.svg.png",
+            "image_url": "https://customer-assets.emergentagent.com/job_a5689270-22d8-4a27-847f-79733a2db487/artifacts/ynyx5p8u_Kia.png",
             "max_members": 50,
             "current_members": 28
         },
@@ -476,7 +476,7 @@ async def seed_initial_data():
             "car_model": "Hyundai Motors",
             "brand": "Hyundai",
             "city": "All India",
-            "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Hyundai_Motor_Company_logo.svg/2560px-Hyundai_Motor_Company_logo.svg.png",
+            "image_url": "https://customer-assets.emergentagent.com/job_a5689270-22d8-4a27-847f-79733a2db487/artifacts/pl3kib9p_Hyundai.png",
             "max_members": 50,
             "current_members": 35
         },
@@ -492,7 +492,7 @@ async def seed_initial_data():
             "car_model": "Maruti Suzuki",
             "brand": "Maruti",
             "city": "All India",
-            "image_url": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Maruti_Suzuki_India_Limited_Logo.svg/2560px-Maruti_Suzuki_India_Limited_Logo.svg.png",
+            "image_url": "https://customer-assets.emergentagent.com/job_a5689270-22d8-4a27-847f-79733a2db487/artifacts/pc3414xi_Maruti%20Suzuki.jpg",
             "max_members": 50,
             "current_members": 44
         },
