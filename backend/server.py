@@ -441,63 +441,282 @@ async def get_my_preference(group_id: str, current_user: User = Depends(get_curr
         return CarPreference(**preference)
     return None
 
-# Car models and variants data
+# Car models, variants and on-road prices (in INR)
 CAR_DATA = {
     "Tata": {
-        "Nexon": ["Smart", "Smart+", "Pure", "Pure+", "Creative", "Creative+", "Fearless", "Fearless+", "Accomplished", "Accomplished+"],
-        "Safari": ["Smart", "Pure", "Adventure", "Adventure+", "Accomplished", "Accomplished+"],
-        "Harrier": ["Smart", "Pure", "Adventure", "Adventure+", "Fearless", "Fearless+"],
-        "Punch": ["Pure", "Adventure", "Accomplished", "Creative+"],
-        "Altroz": ["XE", "XM", "XM+", "XT", "XZ", "XZ+"],
-        "Tiago": ["XE", "XM", "XT", "XZ", "XZ+"]
+        "Nexon": {
+            "Smart": 850000,
+            "Smart+": 920000,
+            "Pure": 970000,
+            "Pure+": 1050000,
+            "Creative": 1120000,
+            "Creative+": 1190000,
+            "Fearless": 1260000,
+            "Fearless+": 1340000,
+            "Accomplished": 1420000,
+            "Accomplished+": 1520000
+        },
+        "Safari": {
+            "Smart": 1680000,
+            "Pure": 1820000,
+            "Adventure": 1950000,
+            "Adventure+": 2080000,
+            "Accomplished": 2220000,
+            "Accomplished+": 2390000
+        },
+        "Harrier": {
+            "Smart": 1590000,
+            "Pure": 1720000,
+            "Adventure": 1850000,
+            "Adventure+": 1980000,
+            "Fearless": 2110000,
+            "Fearless+": 2270000
+        },
+        "Punch": {
+            "Pure": 650000,
+            "Adventure": 720000,
+            "Accomplished": 830000,
+            "Creative+": 950000
+        },
+        "Altroz": {
+            "XE": 680000,
+            "XM": 750000,
+            "XM+": 820000,
+            "XT": 880000,
+            "XZ": 950000,
+            "XZ+": 1020000
+        },
+        "Tiago": {
+            "XE": 550000,
+            "XM": 610000,
+            "XT": 670000,
+            "XZ": 730000,
+            "XZ+": 790000
+        }
     },
     "Mahindra": {
-        "Scorpio N": ["Z2", "Z4", "Z6", "Z8", "Z8 L"],
-        "XUV700": ["MX", "AX3", "AX5", "AX7", "AX7 L"],
-        "Thar": ["AX Opt", "LX", "LX Hard Top"],
-        "Bolero": ["B4", "B6", "B6 Opt"],
-        "XUV 3XO": ["MX1", "MX2", "MX3", "AX5", "AX7", "AX7 L"],
-        "Scorpio Classic": ["S", "S3", "S5", "S7", "S9", "S11"]
+        "Scorpio N": {
+            "Z2": 1350000,
+            "Z4": 1520000,
+            "Z6": 1720000,
+            "Z8": 1950000,
+            "Z8 L": 2180000
+        },
+        "XUV700": {
+            "MX": 1480000,
+            "AX3": 1680000,
+            "AX5": 1880000,
+            "AX7": 2120000,
+            "AX7 L": 2380000
+        },
+        "Thar": {
+            "AX Opt": 1150000,
+            "LX": 1320000,
+            "LX Hard Top": 1480000
+        },
+        "Bolero": {
+            "B4": 950000,
+            "B6": 1050000,
+            "B6 Opt": 1150000
+        },
+        "XUV 3XO": {
+            "MX1": 780000,
+            "MX2": 850000,
+            "MX3": 920000,
+            "AX5": 1050000,
+            "AX7": 1180000,
+            "AX7 L": 1320000
+        },
+        "Scorpio Classic": {
+            "S": 1150000,
+            "S3": 1220000,
+            "S5": 1290000,
+            "S7": 1380000,
+            "S9": 1470000,
+            "S11": 1580000
+        }
     },
     "Kia": {
-        "Seltos": ["HTE", "HTK", "HTK+", "HTX", "HTX+", "GTX", "GTX+", "X-Line"],
-        "Sonet": ["HTE", "HTK", "HTK+", "HTX", "HTX+", "GTX+"],
-        "Carens": ["Premium", "Prestige", "Prestige Plus", "Luxury", "Luxury Plus"],
-        "EV6": ["GT Line"]
+        "Seltos": {
+            "HTE": 1150000,
+            "HTK": 1280000,
+            "HTK+": 1420000,
+            "HTX": 1580000,
+            "HTX+": 1740000,
+            "GTX": 1920000,
+            "GTX+": 2090000,
+            "X-Line": 2290000
+        },
+        "Sonet": {
+            "HTE": 780000,
+            "HTK": 880000,
+            "HTK+": 980000,
+            "HTX": 1080000,
+            "HTX+": 1190000,
+            "GTX+": 1340000
+        },
+        "Carens": {
+            "Premium": 1150000,
+            "Prestige": 1320000,
+            "Prestige Plus": 1480000,
+            "Luxury": 1680000,
+            "Luxury Plus": 1850000
+        },
+        "EV6": {
+            "GT Line": 6200000
+        }
     },
     "Hyundai": {
-        "Creta": ["E", "EX", "S", "S+", "SX", "SX Tech", "SX Opt"],
-        "Venue": ["E", "S", "S+", "SX", "SX+", "SX Opt"],
-        "Verna": ["E", "S", "SX", "SX Opt"],
-        "Exter": ["EX", "S", "SX", "SX Opt"],
-        "Tucson": ["Platinum", "Signature"]
+        "Creta": {
+            "E": 1120000,
+            "EX": 1280000,
+            "S": 1450000,
+            "S+": 1590000,
+            "SX": 1750000,
+            "SX Tech": 1920000,
+            "SX Opt": 2090000
+        },
+        "Venue": {
+            "E": 780000,
+            "S": 920000,
+            "S+": 1020000,
+            "SX": 1150000,
+            "SX+": 1280000,
+            "SX Opt": 1420000
+        },
+        "Verna": {
+            "E": 1150000,
+            "S": 1320000,
+            "SX": 1520000,
+            "SX Opt": 1720000
+        },
+        "Exter": {
+            "EX": 650000,
+            "S": 720000,
+            "SX": 820000,
+            "SX Opt": 920000
+        },
+        "Tucson": {
+            "Platinum": 3050000,
+            "Signature": 3380000
+        }
     },
     "Honda": {
-        "City": ["V", "VX", "ZX"],
-        "Elevate": ["V", "VX", "ZX"],
-        "Amaze": ["E", "S", "VX"],
-        "City Hybrid": ["V", "VX", "ZX"]
+        "City": {
+            "V": 1250000,
+            "VX": 1420000,
+            "ZX": 1590000
+        },
+        "Elevate": {
+            "V": 1220000,
+            "VX": 1380000,
+            "ZX": 1580000
+        },
+        "Amaze": {
+            "E": 780000,
+            "S": 880000,
+            "VX": 980000
+        },
+        "City Hybrid": {
+            "V": 1920000,
+            "VX": 2080000,
+            "ZX": 2250000
+        }
     },
     "Maruti": {
-        "Brezza": ["LXI", "VXI", "ZXI", "ZXI+"],
-        "Fronx": ["Sigma", "Delta", "Delta+", "Zeta", "Alpha"],
-        "Grand Vitara": ["Sigma", "Delta", "Zeta", "Alpha"],
-        "Ertiga": ["LXI", "VXI", "ZXI", "ZXI+"],
-        "Swift": ["LXI", "VXI", "ZXI", "ZXI+"],
-        "Baleno": ["Sigma", "Delta", "Zeta", "Alpha"],
-        "Dzire": ["LXI", "VXI", "ZXI", "ZXI+"]
+        "Brezza": {
+            "LXI": 880000,
+            "VXI": 980000,
+            "ZXI": 1120000,
+            "ZXI+": 1250000
+        },
+        "Fronx": {
+            "Sigma": 780000,
+            "Delta": 880000,
+            "Delta+": 950000,
+            "Zeta": 1050000,
+            "Alpha": 1180000
+        },
+        "Grand Vitara": {
+            "Sigma": 1150000,
+            "Delta": 1280000,
+            "Zeta": 1480000,
+            "Alpha": 1720000
+        },
+        "Ertiga": {
+            "LXI": 880000,
+            "VXI": 980000,
+            "ZXI": 1120000,
+            "ZXI+": 1250000
+        },
+        "Swift": {
+            "LXI": 650000,
+            "VXI": 720000,
+            "ZXI": 820000,
+            "ZXI+": 920000
+        },
+        "Baleno": {
+            "Sigma": 680000,
+            "Delta": 780000,
+            "Zeta": 880000,
+            "Alpha": 980000
+        },
+        "Dzire": {
+            "LXI": 680000,
+            "VXI": 750000,
+            "ZXI": 850000,
+            "ZXI+": 950000
+        }
     },
     "Volkswagen": {
-        "Virtus": ["Comfortline", "Highline", "Topline"],
-        "Taigun": ["Comfortline", "Highline", "Topline"],
-        "Tiguan": ["Elegance", "R-Line"]
+        "Virtus": {
+            "Comfortline": 1280000,
+            "Highline": 1520000,
+            "Topline": 1750000
+        },
+        "Taigun": {
+            "Comfortline": 1220000,
+            "Highline": 1450000,
+            "Topline": 1720000
+        },
+        "Tiguan": {
+            "Elegance": 3580000,
+            "R-Line": 3880000
+        }
     },
     "Toyota": {
-        "Fortuner": ["4x2 MT", "4x2 AT", "4x4 MT", "4x4 AT", "Legender 4x2", "Legender 4x4"],
-        "Innova Crysta": ["GX", "VX", "ZX"],
-        "Innova Hycross": ["GX", "GX (O)", "VX", "VX (O)", "ZX", "ZX (O)"],
-        "Urban Cruiser Hyryder": ["E", "S", "G", "V"],
-        "Glanza": ["E", "S", "G"]
+        "Fortuner": {
+            "4x2 MT": 3580000,
+            "4x2 AT": 3850000,
+            "4x4 MT": 3920000,
+            "4x4 AT": 4180000,
+            "Legender 4x2": 4350000,
+            "Legender 4x4": 4680000
+        },
+        "Innova Crysta": {
+            "GX": 2050000,
+            "VX": 2280000,
+            "ZX": 2520000
+        },
+        "Innova Hycross": {
+            "GX": 2050000,
+            "GX (O)": 2250000,
+            "VX": 2450000,
+            "VX (O)": 2680000,
+            "ZX": 2920000,
+            "ZX (O)": 3180000
+        },
+        "Urban Cruiser Hyryder": {
+            "E": 1150000,
+            "S": 1320000,
+            "G": 1480000,
+            "V": 1680000
+        },
+        "Glanza": {
+            "E": 680000,
+            "S": 780000,
+            "G": 880000
+        }
     }
 }
 
