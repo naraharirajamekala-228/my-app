@@ -444,8 +444,290 @@ async def get_my_preference(group_id: str, current_user: User = Depends(get_curr
         return CarPreference(**preference)
     return None
 
-# Car models, variants and on-road prices (in INR)
+# Car models, variants, transmissions and on-road prices (in INR)
 CAR_DATA = {
+    "Tata": {
+        "Nexon": {
+            "Smart": {"Manual": 850000, "Automatic": 950000},
+            "Smart+": {"Manual": 920000, "Automatic": 1020000},
+            "Pure": {"Manual": 970000, "Automatic": 1070000},
+            "Pure+": {"Manual": 1050000, "Automatic": 1150000},
+            "Creative": {"Manual": 1120000, "Automatic": 1220000},
+            "Creative+": {"Manual": 1190000, "Automatic": 1290000},
+            "Fearless": {"Manual": 1260000, "Automatic": 1360000},
+            "Fearless+": {"Manual": 1340000, "Automatic": 1440000},
+            "Accomplished": {"Manual": 1420000, "Automatic": 1520000},
+            "Accomplished+": {"Manual": 1520000, "Automatic": 1620000}
+        },
+        "Safari": {
+            "Smart": {"Manual": 1680000, "Automatic": 1880000},
+            "Pure": {"Manual": 1820000, "Automatic": 2020000},
+            "Adventure": {"Manual": 1950000, "Automatic": 2150000},
+            "Adventure+": {"Manual": 2080000, "Automatic": 2280000},
+            "Accomplished": {"Manual": 2220000, "Automatic": 2420000},
+            "Accomplished+": {"Manual": 2390000, "Automatic": 2590000}
+        },
+        "Harrier": {
+            "Smart": {"Manual": 1590000, "Automatic": 1790000},
+            "Pure": {"Manual": 1720000, "Automatic": 1920000},
+            "Adventure": {"Manual": 1850000, "Automatic": 2050000},
+            "Adventure+": {"Manual": 1980000, "Automatic": 2180000},
+            "Fearless": {"Manual": 2110000, "Automatic": 2310000},
+            "Fearless+": {"Manual": 2270000, "Automatic": 2470000}
+        },
+        "Punch": {
+            "Pure": {"Manual": 650000, "Automatic": 750000},
+            "Adventure": {"Manual": 720000, "Automatic": 820000},
+            "Accomplished": {"Manual": 830000, "Automatic": 930000},
+            "Creative+": {"Manual": 950000, "Automatic": 1050000}
+        },
+        "Altroz": {
+            "XE": {"Manual": 680000, "Automatic": 780000},
+            "XM": {"Manual": 750000, "Automatic": 850000},
+            "XM+": {"Manual": 820000, "Automatic": 920000},
+            "XT": {"Manual": 880000, "Automatic": 980000},
+            "XZ": {"Manual": 950000, "Automatic": 1050000},
+            "XZ+": {"Manual": 1020000, "Automatic": 1120000}
+        },
+        "Tiago": {
+            "XE": {"Manual": 550000, "Automatic": 630000},
+            "XM": {"Manual": 610000, "Automatic": 690000},
+            "XT": {"Manual": 670000, "Automatic": 750000},
+            "XZ": {"Manual": 730000, "Automatic": 810000},
+            "XZ+": {"Manual": 790000, "Automatic": 870000}
+        }
+    },
+    "Mahindra": {
+        "Scorpio N": {
+            "Z2": {"Manual": 1350000, "Automatic": 1550000},
+            "Z4": {"Manual": 1520000, "Automatic": 1720000},
+            "Z6": {"Manual": 1720000, "Automatic": 1920000},
+            "Z8": {"Manual": 1950000, "Automatic": 2150000},
+            "Z8 L": {"Manual": 2180000, "Automatic": 2380000}
+        },
+        "XUV700": {
+            "MX": {"Manual": 1480000, "Automatic": 1680000},
+            "AX3": {"Manual": 1680000, "Automatic": 1880000},
+            "AX5": {"Manual": 1880000, "Automatic": 2080000},
+            "AX7": {"Manual": 2120000, "Automatic": 2320000},
+            "AX7 L": {"Manual": 2380000, "Automatic": 2580000}
+        },
+        "Thar": {
+            "AX Opt": {"Manual": 1150000, "Automatic": 1320000},
+            "LX": {"Manual": 1320000, "Automatic": 1480000},
+            "LX Hard Top": {"Manual": 1480000, "Automatic": 1650000}
+        },
+        "Bolero": {
+            "B4": {"Manual": 950000},
+            "B6": {"Manual": 1050000},
+            "B6 Opt": {"Manual": 1150000}
+        },
+        "XUV 3XO": {
+            "MX1": {"Manual": 780000, "Automatic": 880000},
+            "MX2": {"Manual": 850000, "Automatic": 950000},
+            "MX3": {"Manual": 920000, "Automatic": 1020000},
+            "AX5": {"Manual": 1050000, "Automatic": 1150000},
+            "AX7": {"Manual": 1180000, "Automatic": 1280000},
+            "AX7 L": {"Manual": 1320000, "Automatic": 1420000}
+        },
+        "Scorpio Classic": {
+            "S": {"Manual": 1150000},
+            "S3": {"Manual": 1220000},
+            "S5": {"Manual": 1290000},
+            "S7": {"Manual": 1380000},
+            "S9": {"Manual": 1470000},
+            "S11": {"Manual": 1580000}
+        }
+    },
+    "Kia": {
+        "Seltos": {
+            "HTE": {"Manual": 1150000, "Automatic": 1300000},
+            "HTK": {"Manual": 1280000, "Automatic": 1430000},
+            "HTK+": {"Manual": 1420000, "Automatic": 1570000},
+            "HTX": {"Manual": 1580000, "Automatic": 1730000},
+            "HTX+": {"Manual": 1740000, "Automatic": 1890000},
+            "GTX": {"Manual": 1920000, "Automatic": 2070000},
+            "GTX+": {"Manual": 2090000, "Automatic": 2240000},
+            "X-Line": {"Manual": 2290000, "Automatic": 2440000}
+        },
+        "Sonet": {
+            "HTE": {"Manual": 780000, "Automatic": 880000},
+            "HTK": {"Manual": 880000, "Automatic": 980000},
+            "HTK+": {"Manual": 980000, "Automatic": 1080000},
+            "HTX": {"Manual": 1080000, "Automatic": 1180000},
+            "HTX+": {"Manual": 1190000, "Automatic": 1290000},
+            "GTX+": {"Manual": 1340000, "Automatic": 1440000}
+        },
+        "Carens": {
+            "Premium": {"Manual": 1150000, "Automatic": 1300000},
+            "Prestige": {"Manual": 1320000, "Automatic": 1470000},
+            "Prestige Plus": {"Manual": 1480000, "Automatic": 1630000},
+            "Luxury": {"Manual": 1680000, "Automatic": 1830000},
+            "Luxury Plus": {"Manual": 1850000, "Automatic": 2000000}
+        },
+        "EV6": {
+            "GT Line": {"Automatic": 6200000}
+        }
+    },
+    "Hyundai": {
+        "Creta": {
+            "E": {"Manual": 1120000, "Automatic": 1270000},
+            "EX": {"Manual": 1280000, "Automatic": 1430000},
+            "S": {"Manual": 1450000, "Automatic": 1600000},
+            "S+": {"Manual": 1590000, "Automatic": 1740000},
+            "SX": {"Manual": 1750000, "Automatic": 1900000},
+            "SX Tech": {"Manual": 1920000, "Automatic": 2070000},
+            "SX Opt": {"Manual": 2090000, "Automatic": 2240000}
+        },
+        "Venue": {
+            "E": {"Manual": 780000, "Automatic": 880000},
+            "S": {"Manual": 920000, "Automatic": 1020000},
+            "S+": {"Manual": 1020000, "Automatic": 1120000},
+            "SX": {"Manual": 1150000, "Automatic": 1250000},
+            "SX+": {"Manual": 1280000, "Automatic": 1380000},
+            "SX Opt": {"Manual": 1420000, "Automatic": 1520000}
+        },
+        "Verna": {
+            "E": {"Manual": 1150000, "Automatic": 1300000},
+            "S": {"Manual": 1320000, "Automatic": 1470000},
+            "SX": {"Manual": 1520000, "Automatic": 1670000},
+            "SX Opt": {"Manual": 1720000, "Automatic": 1870000}
+        },
+        "Exter": {
+            "EX": {"Manual": 650000, "Automatic": 740000},
+            "S": {"Manual": 720000, "Automatic": 810000},
+            "SX": {"Manual": 820000, "Automatic": 910000},
+            "SX Opt": {"Manual": 920000, "Automatic": 1010000}
+        },
+        "Tucson": {
+            "Platinum": {"Automatic": 3050000},
+            "Signature": {"Automatic": 3380000}
+        }
+    },
+    "Honda": {
+        "City": {
+            "V": {"Manual": 1250000, "Automatic": 1400000},
+            "VX": {"Manual": 1420000, "Automatic": 1570000},
+            "ZX": {"Manual": 1590000, "Automatic": 1740000}
+        },
+        "Elevate": {
+            "V": {"Manual": 1220000, "Automatic": 1370000},
+            "VX": {"Manual": 1380000, "Automatic": 1530000},
+            "ZX": {"Manual": 1580000, "Automatic": 1730000}
+        },
+        "Amaze": {
+            "E": {"Manual": 780000, "Automatic": 880000},
+            "S": {"Manual": 880000, "Automatic": 980000},
+            "VX": {"Manual": 980000, "Automatic": 1080000}
+        },
+        "City Hybrid": {
+            "V": {"Automatic": 1920000},
+            "VX": {"Automatic": 2080000},
+            "ZX": {"Automatic": 2250000}
+        }
+    },
+    "Maruti": {
+        "Brezza": {
+            "LXI": {"Manual": 880000, "Automatic": 980000},
+            "VXI": {"Manual": 980000, "Automatic": 1080000},
+            "ZXI": {"Manual": 1120000, "Automatic": 1220000},
+            "ZXI+": {"Manual": 1250000, "Automatic": 1350000}
+        },
+        "Fronx": {
+            "Sigma": {"Manual": 780000, "Automatic": 860000},
+            "Delta": {"Manual": 880000, "Automatic": 960000},
+            "Delta+": {"Manual": 950000, "Automatic": 1030000},
+            "Zeta": {"Manual": 1050000, "Automatic": 1130000},
+            "Alpha": {"Manual": 1180000, "Automatic": 1260000}
+        },
+        "Grand Vitara": {
+            "Sigma": {"Manual": 1150000, "Automatic": 1280000},
+            "Delta": {"Manual": 1280000, "Automatic": 1410000},
+            "Zeta": {"Manual": 1480000, "Automatic": 1610000},
+            "Alpha": {"Manual": 1720000, "Automatic": 1850000}
+        },
+        "Ertiga": {
+            "LXI": {"Manual": 880000, "Automatic": 980000},
+            "VXI": {"Manual": 980000, "Automatic": 1080000},
+            "ZXI": {"Manual": 1120000, "Automatic": 1220000},
+            "ZXI+": {"Manual": 1250000, "Automatic": 1350000}
+        },
+        "Swift": {
+            "LXI": {"Manual": 650000, "Automatic": 730000},
+            "VXI": {"Manual": 720000, "Automatic": 800000},
+            "ZXI": {"Manual": 820000, "Automatic": 900000},
+            "ZXI+": {"Manual": 920000, "Automatic": 1000000}
+        },
+        "Baleno": {
+            "Sigma": {"Manual": 680000, "Automatic": 760000},
+            "Delta": {"Manual": 780000, "Automatic": 860000},
+            "Zeta": {"Manual": 880000, "Automatic": 960000},
+            "Alpha": {"Manual": 980000, "Automatic": 1060000}
+        },
+        "Dzire": {
+            "LXI": {"Manual": 680000, "Automatic": 760000},
+            "VXI": {"Manual": 750000, "Automatic": 830000},
+            "ZXI": {"Manual": 850000, "Automatic": 930000},
+            "ZXI+": {"Manual": 950000, "Automatic": 1030000}
+        }
+    },
+    "Volkswagen": {
+        "Virtus": {
+            "Comfortline": {"Manual": 1280000, "Automatic": 1430000},
+            "Highline": {"Manual": 1520000, "Automatic": 1670000},
+            "Topline": {"Manual": 1750000, "Automatic": 1900000}
+        },
+        "Taigun": {
+            "Comfortline": {"Manual": 1220000, "Automatic": 1370000},
+            "Highline": {"Manual": 1450000, "Automatic": 1600000},
+            "Topline": {"Manual": 1720000, "Automatic": 1870000}
+        },
+        "Tiguan": {
+            "Elegance": {"Automatic": 3580000},
+            "R-Line": {"Automatic": 3880000}
+        }
+    },
+    "Toyota": {
+        "Fortuner": {
+            "4x2 MT": {"Manual": 3580000},
+            "4x2 AT": {"Automatic": 3850000},
+            "4x4 MT": {"Manual": 3920000},
+            "4x4 AT": {"Automatic": 4180000},
+            "Legender 4x2": {"Automatic": 4350000},
+            "Legender 4x4": {"Automatic": 4680000}
+        },
+        "Innova Crysta": {
+            "GX": {"Manual": 2050000, "Automatic": 2220000},
+            "VX": {"Manual": 2280000, "Automatic": 2450000},
+            "ZX": {"Manual": 2520000, "Automatic": 2690000}
+        },
+        "Innova Hycross": {
+            "GX": {"Automatic": 2050000},
+            "GX (O)": {"Automatic": 2250000},
+            "VX": {"Automatic": 2450000},
+            "VX (O)": {"Automatic": 2680000},
+            "ZX": {"Automatic": 2920000},
+            "ZX (O)": {"Automatic": 3180000}
+        },
+        "Urban Cruiser Hyryder": {
+            "E": {"Manual": 1150000, "Automatic": 1280000},
+            "S": {"Manual": 1320000, "Automatic": 1450000},
+            "G": {"Manual": 1480000, "Automatic": 1610000},
+            "V": {"Manual": 1680000, "Automatic": 1810000}
+        },
+        "Glanza": {
+            "E": {"Manual": 680000, "Automatic": 760000},
+            "S": {"Manual": 780000, "Automatic": 860000},
+            "G": {"Manual": 880000, "Automatic": 960000}
+        }
+    }
+}
+
+@api_router.get("/car-data/{brand}")
+async def get_car_data(brand: str):
+    if brand in CAR_DATA:
+        return CAR_DATA[brand]
+    return {}
     "Tata": {
         "Nexon": {
             "Smart": 850000,
