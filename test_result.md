@@ -122,16 +122,16 @@ backend:
         comment: "Fixed syntax errors by removing duplicate endpoints and orphaned code. Successfully consolidated all 8 brands (Tata, Mahindra, Kia, Hyundai, Honda, Maruti, Volkswagen, Toyota) with complete models and variants into a clean CAR_DATA dictionary. Backend linting passed."
   
   - task: "Create MongoDB schema for car data"
-    implemented: false
+    implemented: true
     working: "NA"
     file: "backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Next step: Create 'cars' collection in MongoDB and migrate CAR_DATA"
+        comment: "Created 'cars' collection in MongoDB. Added endpoints: GET /car-data (all brands), POST /admin/seed-car-data (migrate to MongoDB). Updated GET /car-data/{brand} to try MongoDB first, then fallback to hardcoded data."
 
   - task: "API endpoint /car-data/{brand}"
     implemented: true
