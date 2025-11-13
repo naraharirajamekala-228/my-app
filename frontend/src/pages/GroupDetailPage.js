@@ -356,19 +356,28 @@ const GroupDetailPage = ({ user, setUser }) => {
             <div className="bg-white rounded-2xl border border-gray-200 p-6 sticky top-24">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Group Members</h3>
               <div className="space-y-3 max-h-96 overflow-y-auto">
-                {members.map((member, index) => (
-                  <div key={member.id} className="flex items-center space-x-3" data-testid={`member-${index}`}>
-                    <Avatar>
-                      <AvatarFallback className="bg-[#0B5FFF] text-white">
-                        {member.user_name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">{member.user_name}</p>
-                      <p className="text-xs text-gray-500 truncate">{member.user_email}</p>
+                {members.map((member, index) => {
+                  const memberPref = groupPreferences.find(p => p.user_id === member.user_id);
+                  return (
+                    <div key={member.id} className="flex items-start space-x-3" data-testid={`member-${index}`}>
+                      <Avatar>
+                        <AvatarFallback className="bg-[#0B5FFF] text-white">
+                          {member.user_name.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">{member.user_name}</p>
+                        <p className="text-xs text-gray-500 truncate">{member.user_email}</p>
+                        {memberPref && (
+                          <div className="mt-1 text-xs text-[#0B5FFF] font-medium">
+                            <Car className="w-3 h-3 inline mr-1" />
+                            {memberPref.car_model} - {memberPref.variant}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
 
                 {members.length === 0 && (
                   <div className="text-center text-gray-500 py-8">
