@@ -541,9 +541,9 @@ const GroupDetailPage = ({ user, setUser }) => {
               </>
             )}
 
-            {(!selectedModel || !selectedVariant) && (
+            {(!selectedModel || !selectedVariant || !selectedTransmission) && (
               <p className="text-sm text-center text-gray-500 py-4">
-                Select car model and variant to see pricing
+                Select car model, variant and transmission to see pricing
               </p>
             )}
           </div>
