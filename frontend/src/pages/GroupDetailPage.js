@@ -191,7 +191,6 @@ const GroupDetailPage = ({ user, setUser }) => {
                 </div>
 
                 <div className="mb-6">
-                <div className="mb-6">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center text-gray-700">
                       <Users className="w-5 h-5 mr-2" />
