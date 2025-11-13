@@ -269,7 +269,7 @@ const GroupDetailPage = ({ user, setUser }) => {
                         <span className="text-green-800 font-medium">You are a member of this group</span>
                         <div className="text-sm text-green-700 mt-1">
                           <Car className="w-3 h-3 inline mr-1" />
-                          {myPreference.car_model} - {myPreference.variant}
+                          {myPreference.car_model} - {myPreference.variant} ({myPreference.transmission})
                           <span className="ml-2 text-gray-600">
                             (₹{(myPreference.on_road_price / 100000).toFixed(2)} Lakh)
                           </span>
