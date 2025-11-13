@@ -51,6 +51,20 @@ const GroupDetailPage = ({ user, setUser }) => {
         try {
           const paymentRes = await axios.get(`${API}/users/check-payment/${groupId}`);
           setHasPaid(paymentRes.data.has_paid);
+          
+          // Fetch car data for this brand
+          const carDataRes = await axios.get(`${API}/car-data/${groupRes.data.brand}`);
+          setCarData(carDataRes.data);
+          
+          // Fetch user's preference
+          const prefRes = await axios.get(`${API}/groups/${groupId}/my-preference`);
+          if (prefRes.data) {
+            setMyPreference(prefRes.data);
+          }
+          
+          // Fetch all group preferences
+          const groupPrefRes = await axios.get(`${API}/groups/${groupId}/preferences`);
+          setGroupPreferences(groupPrefRes.data);
         } catch (error) {
           setHasPaid(false);
         }
