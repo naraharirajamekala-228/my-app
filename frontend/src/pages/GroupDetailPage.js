@@ -93,31 +93,30 @@ const GroupDetailPage = ({ user, setUser }) => {
       return;
     }
 
-    if (!hasPaid) {
-      setShowPaymentModal(true);
-      return;
-    }
-
-    try {
-      setProcessing(true);
-      await axios.post(`${API}/groups/${groupId}/join`);
-      toast.success('Successfully joined the group!');
-      fetchGroupData();
-    } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to join group');
-    } finally {
-      setProcessing(false);
-    }
+    // Show car selection modal first
+    setShowCarSelectionModal(true);
   };
 
   const handlePayment = async () => {
+    if (!selectedModel || !selectedVariant) {
+      toast.error('Please select car model and variant first');
+      return;
+    }
+
     setProcessing(true);
     try {
-      // Pay for this specific group
-      await axios.post(`${API}/users/pay-for-group/${groupId}`);
+      const onRoadPrice = carData[selectedModel][selectedVariant];
       
-      toast.success('Payment successful for this group!');
+      // Pay for this specific group with car details
+      await axios.post(`${API}/users/pay-for-group/${groupId}`, {
+        car_model: selectedModel,
+        variant: selectedVariant,
+        on_road_price: onRoadPrice
+      });
+      
+      toast.success('Payment successful!');
       setHasPaid(true);
+      setShowCarSelectionModal(false);
       setShowPaymentModal(false);
       
       // Auto join the group
